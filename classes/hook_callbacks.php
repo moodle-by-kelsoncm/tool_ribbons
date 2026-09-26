@@ -42,9 +42,17 @@ class hook_callbacks {
      * @param \core\hook\output\before_standard_top_of_body_html_generation $hook
      */
     public static function before_standard_top_of_body_html(before_standard_top_of_body_html_generation $hook): void {
-        global $CFG;
-        require_once($CFG->dirroot . '/admin/tool/ribbons/lib.php');
-        \tool_ribbons_before_standard_top_of_body_html_callback($hook);
+        $output = '';
+
+        // Load the ribbons.
+        $ribbons = ribbon::all(true);
+
+        // Display them on the page.
+        foreach ($ribbons as $ribbon) {
+            $output .= $ribbon->display();
+        }
+
+        $hook->add_html($output);
     }
 
     /**
@@ -53,8 +61,18 @@ class hook_callbacks {
      * @param \core\hook\output\before_standard_head_html_generation $hook
      */
     public static function before_standard_head_html(before_standard_head_html_generation $hook): void {
-        global $CFG;
-        require_once($CFG->dirroot . '/admin/tool/ribbons/lib.php');
-        \tool_ribbons_before_standard_html_head_callback($hook);
+        $output = '<style type="text/css">';
+
+        // Load the ribbons.
+        $ribbons = ribbon::all(true);
+
+        // Display them on the page.
+        foreach ($ribbons as $ribbon) {
+            $output .= $ribbon->css();
+        }
+
+        $output .= '</style>';
+
+        $hook->add_html($output);
     }
 }
