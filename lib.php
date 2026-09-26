@@ -95,18 +95,20 @@ function tool_ribbons_before_standard_html_head_callback(&$hook = null) {
 }
 
 
-/**
- * Legacy callback that adds the markup for the ribbons to the top of the page body.
- * @return string
- */
-function tool_ribbons_before_standard_top_of_body_html() : string {
-    return tool_ribbons_before_standard_top_of_body_html_callback();
-}
+if (!class_exists(\core\hook\output\before_standard_head_html_generation::class)) {
+    /**
+     * Legacy callback that adds the markup for the ribbons to the top of the page body.
+     * @return string
+     */
+    function tool_ribbons_before_standard_top_of_body_html() : string {
+        return tool_ribbons_before_standard_top_of_body_html_callback();
+    }
 
-/**
- * Legacy callback that adds CSS for the ribbons in a <style> tag to the page header.
- * @return string
- */
-function tool_ribbons_before_standard_html_head() : string {
-    return tool_ribbons_before_standard_html_head_callback();
+    /**
+     * Legacy callback that adds CSS for the ribbons in a <style> tag to the page header.
+     * @return string
+     */
+    function tool_ribbons_before_standard_html_head() : string {
+        return tool_ribbons_before_standard_html_head_callback();
+    }
 }
